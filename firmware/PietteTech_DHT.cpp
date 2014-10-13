@@ -45,7 +45,7 @@
 
 #include "application.h"
 #include "math.h"
-#include "PietteTech_DHT/PietteTech_DHT.h"
+#include "PietteTech_DHT.h"
 
 // Thanks to Paul Kourany for this word type conversion function
 uint16_t word(uint8_t high, uint8_t low) {
