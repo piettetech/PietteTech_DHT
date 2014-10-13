@@ -1,9 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-  <head>
-
-    <meta http-equiv="content-type" content="text/html; charset=windows-1252">
-  </head>
   <body>
     <b><big>Interrupt driven DHT 11/21/22 sensor library for Spark </big><br>
     </b>
@@ -13,8 +8,7 @@
       interrupts</p>
     <p></p>
     Scott Piette, Piette Technologies - scott.piette@gmail.com<br>
-    Jan 18, 2014&nbsp; - Initial port to Spark Core
-    scott.piette@gmail.com<br>
+    Jan 18, 2014&nbsp; - Initial port to Spark Core<br>
     Oct&nbsp; 1, 2014&nbsp; - Added DHT11/21 support, fixed timing
     issues, enhanced examples
     <p>
@@ -48,7 +42,7 @@
     <p><big><big>Wiring diagram for Spark Core with DHT22 Sensor</big></big><br>
     </p>
     <img alt=""
-      src="file:///Users/scottpiette/git/Spark_iDHT/DHT22%20Example.png"
+      src="https://github.com/piettetech/PietteTech_DHT/blob/master/DHT22%20Example.png"
       height="354" width="495">
     <p>
       DATASHEETS: </p>
