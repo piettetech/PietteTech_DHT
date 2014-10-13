@@ -22,8 +22,6 @@
 #ifndef __PIETTETECH_DHT_H__
 #define __PIETTETECH_DHT_H__
 
-#define DHT_DEBUG_TIMING        // Enable this for edge->edge timing collection
-
 #include "application.h"
 
 #define DHTLIB_VERSION "0.2"
