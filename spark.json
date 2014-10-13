@@ -1,0 +1,7 @@
+{
+    "name": "DHT",
+    "version": "0.0.2",
+    "author": "Scott Piette scott.piette@gmail.com",
+    "license": "GPL v3 (http://www.gnu.org/licenses/gpl.html)",
+    "description": "Interrupt driven DHT11/21/22 Sensor library"
+}
