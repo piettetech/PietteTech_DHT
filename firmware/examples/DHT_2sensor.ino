@@ -13,7 +13,8 @@
  *      October 2014        Added support for DHT21/22 sensors
  *                          Improved timing, moved FP math out of ISR
  */
-// NOTE enable #define DHT_DEBUG_TIMING in PietteTech_DHT.h to debug edge->edge timings
+// NOTE DHT_REPORT_TIMING requires DHT_DEBUG_TIMING in PietteTech_DHT.h for debugging edge->edge timings
+//#define DHT_REPORT_TIMING
 
 #include "PietteTech_DHT/PietteTech_DHT.h"
 
@@ -69,14 +70,14 @@ void setup()
     _lastTimeInLoop = millis();
 }
 
-#if defined(DHT_DEBUG_TIMING)
+#if defined(DHT_REPORT_TIMING)
 // This function will report the timings collected
 void printEdgeTiming(class PietteTech_DHT *_d) {
     byte n;
     volatile uint8_t *_e = &_d->_edges[0];
     
     Serial.print("Edge timing = ");
-    for (n=0; n<41; n++) {
+    for (n = 0; n < 41; n++) {
         Serial.print(*_e++);
         if (n < 40)
             Serial.print(".");
@@ -124,7 +125,7 @@ void printSensorData(class PietteTech_DHT *_d) {
             break;
     }
 
-#if defined(DHT_DEBUG_TIMING)
+#if defined(DHT_REPORT_TIMING)
     // print debug timing information
     printEdgeTiming(_d);
 #endif
@@ -156,7 +157,7 @@ void loop()
     if (_delta > (1.05 * LOOP_DELAY))
         _spark_error_count++;
 
-    // Launch the aquisition on the two sensors
+    // Launch the acquisition on the two sensors
     DHTA.acquire();
     DHTB.acquire();
 

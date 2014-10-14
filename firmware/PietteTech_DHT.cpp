@@ -80,7 +80,7 @@ int PietteTech_DHT::acquire() {
         _lastreadtime = 0;
     }
     if (!_firstreading && ((currenttime - _lastreadtime) < 2000 )) {
-        // return last correct measurement
+        // return last correct measurement, (this read time - last read time) < device limit
         return DHTLIB_ACQUIRED;
     }
     
@@ -96,14 +96,14 @@ int PietteTech_DHT::acquire() {
         /*
          * Clear the debug timings array
          */
-        for (int i=0; i< 41; i++) _edges[i] = 0;
+        for (int i = 0; i < 41; i++) _edges[i] = 0;
         _e = &_edges[0];
 #endif
 
         /*
          * Set the initial values in the buffer and variables
          */
-        for (int i=0; i< 6; i++) _bits[i] = 0;
+        for (int i = 0; i < 5; i++) _bits[i] = 0;
         _cnt = 7;
         _idx = 0;
         _hum = 0;
@@ -141,18 +141,16 @@ int PietteTech_DHT::acquireAndWait() {
 
 void PietteTech_DHT::isrCallback() {
     unsigned long newUs = micros();
-    unsigned long delta = (newUs-_us);
+    unsigned long delta = (newUs - _us);
     _us = newUs;
 
-    if (delta>6000) {
+    if (delta > 6000) {
         _status = DHTLIB_ERROR_ISR_TIMEOUT;
         _state = STOPPED;
         detachInterrupt(_sigPin);
         return;
     }
-    
     switch(_state) {
-            
         case RESPONSE:            // Spec: 80us LOW followed by 80us HIGH
             if(delta < 65) {      // Spec: 20-200us to first falling edge of response
                 _us -= delta;
@@ -171,21 +169,17 @@ void PietteTech_DHT::isrCallback() {
 #endif
             }
             break;
-
         case DATA:          // Spec: 50us low followed by high of 26-28us = 0, 70us = 1
-            if(delta < 10) {
-                detachInterrupt(_sigPin);
-                _status = DHTLIB_ERROR_DELTA;
-                _state = STOPPED;
-            } else if(60 < delta && delta < 155) { //valid in timing
-                if(delta > 110) //is a one
-                    _bits[_idx] |= (1 << _cnt);
+            if(60 < delta && delta < 155) { //valid in timing
+        	_bits[_idx] <<= 1; // shift the data
+        	if(delta > 110) //is a one
+                    _bits[_idx] |= 1;
 #if defined(DHT_DEBUG_TIMING)
                 *_e++ = delta;  // record the edge -> edge time
 #endif
-                if (_cnt == 0) { // we have fullfilled the byte, go to next
+                if (_cnt == 0) { // we have completed the byte, go to next
                     _cnt = 7; // restart at MSB
-                    if(_idx++ == 4) { // go to next byte, if we have got 5 bytes stop.
+                    if(++_idx == 5) { // go to next byte, if we have got 5 bytes stop.
                         detachInterrupt(_sigPin);
                         // Verify checksum
                         uint8_t sum = _bits[0] + _bits[1] + _bits[2] + _bits[3];
@@ -200,13 +194,16 @@ void PietteTech_DHT::isrCallback() {
                         break;
                     }
                 } else _cnt--;
+            } else if(delta < 10) {
+                detachInterrupt(_sigPin);
+                _status = DHTLIB_ERROR_DELTA;
+                _state = STOPPED;
             } else {
                 detachInterrupt(_sigPin);
                 _status = DHTLIB_ERROR_DATA_TIMEOUT;
                 _state = STOPPED;
             }
             break;
-          
         default:
             break;
     }

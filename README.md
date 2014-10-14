@@ -39,7 +39,7 @@
       BASED ON:</p>
     DHT11 interrupt library <a href="https://github.com/niesteszeck">https://github.com/niesteszeck</a><br>
     DHT11 library <a href="http://playground.arduino.cc/Main/DHT11Lib">http://playground.arduino.cc/Main/DHT11Lib</a>
-    <p><big><big>Wiring diagram for Spark Core with DHT22 Sensor</big></big><br>
+    <p><p><big><big>Wiring diagram for Spark Core with DHT22 Sensor</big></big><br>
     </p>
     <img alt=""
       src="https://github.com/piettetech/PietteTech_DHT/blob/master/DHT22%20Example.png"

@@ -22,6 +22,9 @@
 #ifndef __PIETTETECH_DHT_H__
 #define __PIETTETECH_DHT_H__
 
+// There appears to be a overrun in memory on this class.  For now please leave DHT_DEBUG_TIMING enabled
+#define DHT_DEBUG_TIMING        // Enable this for edge->edge timing collection
+
 #include "application.h"
 
 #define DHTLIB_VERSION "0.2"
@@ -84,10 +87,10 @@ private:
     enum states{RESPONSE=0,DATA=1,ACQUIRED=2,STOPPED=3,ACQUIRING=4};
     volatile states _state;
     volatile int _status;
-    volatile uint8_t _bits[6];
+    volatile uint8_t _bits[5];
     volatile uint8_t _cnt;
     volatile uint8_t _idx;
-    volatile int _us;
+    volatile unsigned long _us;
     volatile bool _convert;
 #if defined(DHT_DEBUG_TIMING)
     volatile uint8_t *_e;
