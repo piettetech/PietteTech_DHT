@@ -1,6 +1,6 @@
 /*
  * FILE:        DHT_simple.ino
- * VERSION:     0.2
+ * VERSION:     0.3
  * PURPOSE:     Example that uses DHT library with two sensors
  * LICENSE:     GPL v3 (http://www.gnu.org/licenses/gpl.html)
  *
