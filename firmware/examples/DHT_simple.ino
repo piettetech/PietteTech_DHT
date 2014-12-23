@@ -13,10 +13,11 @@
  *                          Improved timing, moved FP math out of ISR
  */
 
-#include "PietteTech_DHT/PietteTech_DHT.h"
+#include "PietteTech_DHT/PietteTech_DHT.h"  // Uncomment if building in IDE
+//#include "PietteTech_DHT.h"  // Uncommend if building using CLI
 
 #define DHTTYPE  DHT22       // Sensor type DHT11/21/22/AM2301/AM2302
-#define DHTPIN   3           // Digital pin for communications
+#define DHTPIN   2           // Digital pin for communications
 
 //declaration
 void dht_wrapper(); // must be declared before the lib initialization

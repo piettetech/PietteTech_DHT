@@ -27,7 +27,7 @@
 
 #include "application.h"
 
-#define DHTLIB_VERSION "0.2"
+#define DHTLIB_VERSION "0.3"
 
 // device types
 #define DHT11                               11
