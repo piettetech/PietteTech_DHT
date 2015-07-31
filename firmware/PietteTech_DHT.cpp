@@ -22,7 +22,7 @@
 /*
     Timing of DHT22 SDA signal line after MCU pulls low for 1ms
     https://github.com/mtnscott/Spark_DHT/AM2302.pdf
- 
+
   - - - -            -----           -- - - --            ------- - -
          \          /     \         /  \      \          /
           +        /       +       /    +      +        /
@@ -30,7 +30,7 @@
             ------           -----        -- - --------
  ^        ^                ^                   ^          ^
  |   Ts   |        Tr      |        Td         |    Te    |
- 
+
     Ts : Start time from MCU changing SDA from Output High to Tri-State (Hi-Z)
          Spec: 20-200us             Tested: < 65us
     Tr : DHT response to MCU controlling SDA and pulling Low and High to
@@ -83,7 +83,7 @@ int PietteTech_DHT::acquire() {
         // return last correct measurement, (this read time - last read time) < device limit
         return DHTLIB_ACQUIRED;
     }
-    
+
     if (_state == STOPPED || _state == ACQUIRED) {
         /*
          * Setup the initial state machine
@@ -137,16 +137,16 @@ int PietteTech_DHT::acquireAndWait(uint32_t timeout=0) {
     acquire();
     uint32_t start = millis();
     uint32_t wrapper;
-    while(acquiring() && (timeout == 0 || (millis() > start && (millis-start) < timeout));
+    while(acquiring() && (timeout == 0 || (millis() > start && (millis()-start) < timeout)));
     if (timeout)
     {
-        if (millis < start) // millis counter wrapped
+        if (millis() < start) // millis counter wrapped
         {
             wrapper = (~start)+1;   // Compute elapsed seconds between "start" and counter-wrap to 0
             timeout -= wrapper;     // Subtract elapsed seconds to 0 from timeout
         }
         // If millis counter didn't wrap, the next line will be a no-op.
-        while(acquiring() && millis < timeout);
+        while(acquiring() && (millis() < timeout));
     }
     return getStatus();
 }
