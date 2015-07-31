@@ -133,9 +133,21 @@ int PietteTech_DHT::acquire() {
         return DHTLIB_ERROR_ACQUIRING;
 }
 
-int PietteTech_DHT::acquireAndWait() {
+int PietteTech_DHT::acquireAndWait(uint32_t timeout=0) {
     acquire();
-    while(acquiring()) ;
+    uint32_t start = millis();
+    uint32_t wrapper;
+    while(acquiring() && (timeout == 0 || (millis() > start && (millis-start) < timeout));
+    if (timeout)
+    {
+        if (millis < start) // millis counter wrapped
+        {
+            wrapper = (~start)+1;   // Compute elapsed seconds between "start" and counter-wrap to 0
+            timeout -= wrapper;     // Subtract elapsed seconds to 0 from timeout
+        }
+        // If millis counter didn't wrap, the next line will be a no-op.
+        while(acquiring() && millis < timeout);
+    }
     return getStatus();
 }
 
