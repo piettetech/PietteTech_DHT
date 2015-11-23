@@ -51,7 +51,7 @@ void setup()
 
 
 // This wrapper is in charge of calling
-// mus be defined like this for the lib work
+// must be defined like this for the lib work
 void dht_wrapper() {
     DHT.isrCallback();
 }
