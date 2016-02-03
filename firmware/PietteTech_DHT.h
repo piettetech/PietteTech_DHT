@@ -61,9 +61,9 @@
 class PietteTech_DHT
 {
 public:
-    PietteTech_DHT(uint8_t sigPin, uint8_t dht_type, void (*isrCallback_wrapper)());
-    void begin(uint8_t sigPin, uint8_t dht_type, void (*isrCallback_wrapper)());
-    void isrCallback();
+    PietteTech_DHT(uint8_t sigPin, uint8_t dht_type);
+    void begin(uint8_t sigPin, uint8_t dht_type);
+  
     int acquire();
     int acquireAndWait();
     float getCelsius();
@@ -79,11 +79,10 @@ public:
 #if defined(DHT_DEBUG_TIMING)
     volatile uint8_t _edges[41];
 #endif
-    
+
 private:
-    void (*isrCallback_wrapper)(void);
     void convert();
-    
+    void isrCallback();
     enum states{RESPONSE=0,DATA=1,ACQUIRED=2,STOPPED=3,ACQUIRING=4};
     volatile states _state;
     volatile int _status;

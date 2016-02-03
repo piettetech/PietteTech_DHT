@@ -19,11 +19,9 @@
 #define DHTTYPE  DHT22       // Sensor type DHT11/21/22/AM2301/AM2302
 #define DHTPIN   2           // Digital pin for communications
 
-//declaration
-void dht_wrapper(); // must be declared before the lib initialization
 
 // Lib instantiate
-PietteTech_DHT DHT(DHTPIN, DHTTYPE, dht_wrapper);
+PietteTech_DHT DHT(DHTPIN, DHTTYPE);
 int n;      // counter
 
 void setup()
@@ -41,9 +39,7 @@ void setup()
 
 // This wrapper is in charge of calling
 // must be defined like this for the lib work
-void dht_wrapper() {
-    DHT.isrCallback();
-}
+
 
 void loop()
 {
