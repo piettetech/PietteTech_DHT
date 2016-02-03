@@ -23,11 +23,9 @@
 #define DHTPIN   3         	    // Digital pin for communications
 #define DHT_SAMPLE_INTERVAL   2000  // Sample every two seconds
 
-//declaration
-void dht_wrapper(); // must be declared before the lib initialization
 
 // Lib instantiate
-PietteTech_DHT DHT(DHTPIN, DHTTYPE, dht_wrapper);
+PietteTech_DHT DHT(DHTPIN, DHTTYPE);
 
 // globals
 unsigned int DHTnextSampleTime;	    // Next time we want to start sample
@@ -47,13 +45,6 @@ void setup()
     Serial.println("---------------");
 
     DHTnextSampleTime = 0;  // Start the first sample immediately
-}
-
-
-// This wrapper is in charge of calling
-// mus be defined like this for the lib work
-void dht_wrapper() {
-    DHT.isrCallback();
 }
 
 void loop()
