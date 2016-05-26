@@ -133,7 +133,7 @@ int PietteTech_DHT::acquire() {
         return DHTLIB_ERROR_ACQUIRING;
 }
 
-int PietteTech_DHT::acquireAndWait(uint32_t timeout=0) {
+int PietteTech_DHT::acquireAndWait(uint32_t timeout) {
     acquire();
     uint32_t start = millis();
     uint32_t wrapper;
