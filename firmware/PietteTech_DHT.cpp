@@ -137,16 +137,32 @@ int PietteTech_DHT::acquireAndWait(uint32_t timeout) {
     acquire();
     uint32_t start = millis();
     uint32_t wrapper;
-    while(acquiring() && (timeout == 0 || (millis() > start && (millis()-start) < timeout)));
+	if (timeout == 0)
+	{
+		while (acquiring());
+	}
+	else
+	{
+		while (acquiring())
+		{
+			if (millis() - start > timeout)
+			{
+				_state = STOPPED;
+				return DHTLIB_ERROR_RESPONSE_TIMEOUT;
+			}
+		}
+	}
+
+    //while(acquiring() && (timeout == 0 || (millis() > start && (millis()-start) < timeout)));
     if (timeout)
     {
-        if (millis() < start) // millis counter wrapped
+        /*if (millis() < start) // millis counter wrapped
         {
             wrapper = (~start)+1;   // Compute elapsed seconds between "start" and counter-wrap to 0
             timeout -= wrapper;     // Subtract elapsed seconds to 0 from timeout
         }
         // If millis counter didn't wrap, the next line will be a no-op.
-        while(acquiring() && (millis() < timeout));
+        while(acquiring() && (millis() < timeout));*/
     }
     return getStatus();
 }
