@@ -14,7 +14,9 @@
  *      January 2014        Original Spark Port
  *      October 2014        Added support for DHT21/22 sensors
  *                          Improved timing, moved FP math out of ISR
- *      September 2016      Updated for Particle
+ *      September 2016      Updated for Particle and removed dependency
+ *                          on callback_wrapper.  Use of callback_wrapper
+ *                          is still for backward compatibility but not used
  */
 
 #include "PietteTech_DHT/PietteTech_DHT.h"  // Uncomment if building in IDE
@@ -25,6 +27,11 @@
 #define DHTPIN   3         	    // Digital pin for communications
 #define DHT_SAMPLE_INTERVAL   2000  // Sample every two seconds
 
+/*
+ * NOTE: Use of callback_wrapper has been deprecated but left in this example
+ *       to confirm backwards compabibility.  Look at DHT_2sensor for how
+ *       to write code without the callback_wrapper
+ */
 //declaration
 void dht_wrapper(); // must be declared before the lib initialization
 
@@ -53,6 +60,10 @@ void setup()
 }
 
 
+/*
+ * NOTE:  Use of callback_wrapper has been deprecated but left in this example
+ * to confirm backwards compatibility.
+ */
 // This wrapper is in charge of calling
 // must be defined like this for the lib work
 void dht_wrapper() {

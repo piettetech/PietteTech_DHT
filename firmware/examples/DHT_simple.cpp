@@ -11,7 +11,9 @@
  *      January 2014        Original Spark Port
  *      October 2014        Added support for DHT21/22 sensors
  *                          Improved timing, moved FP math out of ISR
- *      September 2016      Updated for Particle
+ *      September 2016      Updated for Particle and removed dependency
+ *                          on callback_wrapper.  Use of callback_wrapper
+ *                          is still for backward compatibility but not used
  */
 
 #include "PietteTech_DHT/PietteTech_DHT.h"  // Uncomment if building in IDE
@@ -20,11 +22,14 @@
 #define DHTTYPE  DHT22       // Sensor type DHT11/21/22/AM2301/AM2302
 #define DHTPIN   3           // Digital pin for communications
 
+/*
+ * NOTE: Use of callback_wrapper has been deprecated
+ */
 //declaration
-void dht_wrapper(); // must be declared before the lib initialization
+//void dht_wrapper(); // must be declared before the lib initialization
 
 // Lib instantiate
-PietteTech_DHT DHT(DHTPIN, DHTTYPE, dht_wrapper);
+PietteTech_DHT DHT(DHTPIN, DHTTYPE);
 int n;      // counter
 
 void setup()
@@ -35,17 +40,21 @@ void setup()
 		Particle.process();
         delay (1000);
     }
-    Serial.println("DHT Example program using DHT.acquireAndWait");
+    Serial.println("DHT Simple program using DHT.acquireAndWait");
     Serial.print("LIB version: ");
     Serial.println(DHTLIB_VERSION);
     Serial.println("---------------");
 }
 
+/*
+ * NOTE:  Use of callback_wrapper has been deprecated but left in this example
+ * to confirm backwards compabibility.
+ */
 // This wrapper is in charge of calling
 // must be defined like this for the lib work
-void dht_wrapper() {
-    DHT.isrCallback();
-}
+//void dht_wrapper() {
+//    DHT.isrCallback();
+//}
 
 void loop()
 {

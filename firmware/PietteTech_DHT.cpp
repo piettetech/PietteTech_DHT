@@ -8,8 +8,9 @@
  *      January 2014        Original Spark Port
  *      October 2014        Added support for DHT21/22 sensors
  *                          Improved timing, moved FP math out of ISR
- *      September 2016      Updated for Particle
- *                          fixed isrCallback
+ *      September 2016      Updated for Particle and removed dependency
+ *                          on callback_wrapper.  Use of callback_wrapper
+ *                          is still for backward compatibility but not used
  *
  * Based on adaptation by niesteszeck (github/niesteszeck)
  * Based on original DHT11 library (http://playgroudn.adruino.cc/Main/DHT11Lib)
@@ -56,12 +57,20 @@ uint16_t word(uint8_t high, uint8_t low) {
     return ret_val;
 }
 
-PietteTech_DHT::PietteTech_DHT(uint8_t sigPin, uint8_t dht_type) {
+/*
+ * NOTE:  callback_wrapper is only here for backwards compatibility with v0.3 and earlier
+ *        it is no longer used or needed
+ */
+PietteTech_DHT::PietteTech_DHT(uint8_t sigPin, uint8_t dht_type, void (*callback_wrapper)()) {
     begin(sigPin, dht_type);
     _firstreading = true;
 }
 
-void PietteTech_DHT::begin(uint8_t sigPin, uint8_t dht_type) {
+/*
+ * NOTE:  callback_wrapper is only here for backwards compatibility with v0.3 and earlier
+ *        it is no longer used or needed
+ */
+void PietteTech_DHT::begin(uint8_t sigPin, uint8_t dht_type, void (*callback_wrapper)()) {
     _sigPin = sigPin;
     _type = dht_type;
 
@@ -127,7 +136,7 @@ int PietteTech_DHT::acquire() {
          * starts to send us data
          */
         _us = micros();
-        attachInterrupt(_sigPin, &PietteTech_DHT::isrCallback, this, FALLING);
+        attachInterrupt(_sigPin, &PietteTech_DHT::_isrCallback, this, FALLING);
 
         return DHTLIB_ACQUIRING;
     } else
@@ -152,7 +161,13 @@ int PietteTech_DHT::acquireAndWait(uint32_t timeout) {
     return getStatus();
 }
 
-void PietteTech_DHT::isrCallback() {
+/*
+ * NOTE:  isrCallback is only here for backwards compatibility with v0.3 and earlier
+ *        it is no longer used or needed
+ */
+void PietteTech_DHT::isrCallback() { }
+
+void PietteTech_DHT::_isrCallback() {
     unsigned long newUs = micros();
     unsigned long delta = (newUs - _us);
     _us = newUs;

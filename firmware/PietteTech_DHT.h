@@ -8,8 +8,9 @@
  *      January 2014        Original Spark Port
  *      October 2014        Added support for DHT21/22 sensors
  *                          Improved timing, moved FP math out of ISR
- *      September 2016      Updated for Particle
- *                          fixed isrCallback
+ *      September 2016      Updated for Particle and removed dependency
+ *                          on callback_wrapper.  Use of callback_wrapper
+ *                          is still for backward compatibility but not used
  *
  * Based on adaptation by niesteszeck (github/niesteszeck)
  * Based on original DHT11 library (http://playgroudn.adruino.cc/Main/DHT11Lib)
@@ -63,8 +64,13 @@
 class PietteTech_DHT
 {
 public:
-    PietteTech_DHT(uint8_t sigPin, uint8_t dht_type);
-    void begin(uint8_t sigPin, uint8_t dht_type);
+    PietteTech_DHT(uint8_t sigPin, uint8_t dht_type, void (*callback_wrapper)() = NULL);
+    void begin(uint8_t sigPin, uint8_t dht_type, void (*callback_wrapper)() = NULL);
+/*
+ * NOTE:  isrCallback is only here for backwards compatibility with v0.3 and earlier
+ *        it is no longer used or needed
+ */
+    void isrCallback();
     int acquire();
     int acquireAndWait(uint32_t timeout = 0);
     float getCelsius();
@@ -82,7 +88,7 @@ public:
 #endif
 
 private:
-    void isrCallback();
+    void _isrCallback();
     void convert();
 
     enum states{RESPONSE=0,DATA=1,ACQUIRED=2,STOPPED=3,ACQUIRING=4};

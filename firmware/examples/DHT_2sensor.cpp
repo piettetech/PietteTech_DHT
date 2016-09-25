@@ -12,7 +12,9 @@
  *      January 2014        Original Spark Port
  *      October 2014        Added support for DHT21/22 sensors
  *                          Improved timing, moved FP math out of ISR
- *      September 2016      Updated for Particle
+ *      September 2016      Updated for Particle and removed dependency
+ *                          on callback_wrapper.  Use of callback_wrapper
+ *                          is still for backward compatibility but not used
  */
 // NOTE DHT_REPORT_TIMING requires DHT_DEBUG_TIMING in PietteTech_DHT.h for debugging edge->edge timings
 //#define DHT_REPORT_TIMING
@@ -44,8 +46,7 @@ void setup()
         Particle.process();
         delay (1000);
     }
-    Serial.println("DHT Example program using 2 DHT sensors");
-    Serial.println("---> DHT.acquire and DHT.aquiring");
+    Serial.println("DHT 2 Sensor program using DHT.acquire and DHT.aquiring");
     Serial.print("LIB version: ");
     Serial.println(DHTLIB_VERSION);
     Serial.println("---------------");
