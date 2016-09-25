@@ -20,7 +20,7 @@
       <tbody>
         <tr>
           <td valign="top">VERSION:</td>
-          <td valign="top">0.2<br>
+          <td valign="top">0.4<br>
           </td>
         </tr>
         <tr>
