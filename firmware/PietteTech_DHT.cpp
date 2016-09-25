@@ -9,6 +9,7 @@
  *      October 2014        Added support for DHT21/22 sensors
  *                          Improved timing, moved FP math out of ISR
  *      September 2016      Updated for Particle
+ *                          fixed isrCallback
  *
  * Based on adaptation by niesteszeck (github/niesteszeck)
  * Based on original DHT11 library (http://playgroudn.adruino.cc/Main/DHT11Lib)
@@ -55,15 +56,14 @@ uint16_t word(uint8_t high, uint8_t low) {
     return ret_val;
 }
 
-PietteTech_DHT::PietteTech_DHT(uint8_t sigPin, uint8_t dht_type, void (*callback_wrapper)()) {
-    begin(sigPin, dht_type, callback_wrapper);
+PietteTech_DHT::PietteTech_DHT(uint8_t sigPin, uint8_t dht_type) {
+    begin(sigPin, dht_type);
     _firstreading = true;
 }
 
-void PietteTech_DHT::begin(uint8_t sigPin, uint8_t dht_type, void (*callback_wrapper) ()) {
+void PietteTech_DHT::begin(uint8_t sigPin, uint8_t dht_type) {
     _sigPin = sigPin;
     _type = dht_type;
-    isrCallback_wrapper = callback_wrapper;
 
     pinMode(sigPin, OUTPUT);
     digitalWrite(sigPin, HIGH);
@@ -127,7 +127,7 @@ int PietteTech_DHT::acquire() {
          * starts to send us data
          */
         _us = micros();
-        attachInterrupt(_sigPin, isrCallback_wrapper, FALLING);
+        attachInterrupt(_sigPin, &PietteTech_DHT::isrCallback, this, FALLING);
 
         return DHTLIB_ACQUIRING;
     } else

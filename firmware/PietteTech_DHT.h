@@ -9,6 +9,7 @@
  *      October 2014        Added support for DHT21/22 sensors
  *                          Improved timing, moved FP math out of ISR
  *      September 2016      Updated for Particle
+ *                          fixed isrCallback
  *
  * Based on adaptation by niesteszeck (github/niesteszeck)
  * Based on original DHT11 library (http://playgroudn.adruino.cc/Main/DHT11Lib)
@@ -62,9 +63,8 @@
 class PietteTech_DHT
 {
 public:
-    PietteTech_DHT(uint8_t sigPin, uint8_t dht_type, void (*isrCallback_wrapper)());
-    void begin(uint8_t sigPin, uint8_t dht_type, void (*isrCallback_wrapper)());
-    void isrCallback();
+    PietteTech_DHT(uint8_t sigPin, uint8_t dht_type);
+    void begin(uint8_t sigPin, uint8_t dht_type);
     int acquire();
     int acquireAndWait(uint32_t timeout = 0);
     float getCelsius();
@@ -82,7 +82,7 @@ public:
 #endif
 
 private:
-    void (*isrCallback_wrapper)(void);
+    void isrCallback();
     void convert();
 
     enum states{RESPONSE=0,DATA=1,ACQUIRED=2,STOPPED=3,ACQUIRING=4};

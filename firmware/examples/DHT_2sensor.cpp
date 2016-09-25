@@ -25,13 +25,9 @@
 #define DHTTYPEB  DHT11       // Sensor type DHT11/21/22/AM2301/AM2302
 #define DHTPINB   2           // Digital pin for comunications
 
-//declaration
-void dht_wrapperA(); // must be declared before the lib initialization
-void dht_wrapperB(); // must be declared before the lib initialization
-
-// Lib instantiate
-PietteTech_DHT DHTA(DHTPINA, DHTTYPEA, dht_wrapperA);
-PietteTech_DHT DHTB(DHTPINB, DHTTYPEB, dht_wrapperB);
+// Instantiate two class objects
+PietteTech_DHT DHTA(DHTPINA, DHTTYPEA);
+PietteTech_DHT DHTB(DHTPINB, DHTTYPEB);
 int n;      // counter
 
 #define LOOP_DELAY 5000 // 5s intervals
@@ -39,21 +35,6 @@ int _sensorA_error_count;
 int _sensorB_error_count;
 int _spark_error_count;
 unsigned long _lastTimeInLoop;
-bool active_wrapper;    // NOTE: Do not remove this, it prevents compiler from optimizing
-
-// This wrapper is in charge of calling
-// must be defined like this for the lib work
-void dht_wrapperA() {
-    active_wrapper = true;      // NOTE: Do not remove this, it prevents compiler from optimizing
-    DHTA.isrCallback();
-}
-
-// This wrapper is in charge of calling
-// must be defined like this for the lib work
-void dht_wrapperB() {
-    active_wrapper = false;      // NOTE: Do not remove this, it prevents compiler from optimizing
-    DHTB.isrCallback();
-}
 
 void setup()
 {
