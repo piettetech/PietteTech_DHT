@@ -1,6 +1,6 @@
 /*
  * FILE:        PietteTech_DHT.h
- * VERSION:     0.3
+ * VERSION:     0.4
  * PURPOSE:     Spark Interrupt driven lib for DHT sensors
  * LICENSE:     GPL v3 (http://www.gnu.org/licenses/gpl.html)
  *
@@ -8,6 +8,7 @@
  *      January 2014        Original Spark Port
  *      October 2014        Added support for DHT21/22 sensors
  *                          Improved timing, moved FP math out of ISR
+ *      September 2016      Updated for Particle
  *
  * Based on adaptation by niesteszeck (github/niesteszeck)
  * Based on original DHT11 library (http://playgroudn.adruino.cc/Main/DHT11Lib)
@@ -27,7 +28,7 @@
 
 #include "application.h"
 
-#define DHTLIB_VERSION "0.3"
+#define DHTLIB_VERSION "0.4"
 
 // device types
 #define DHT11                               11
@@ -65,7 +66,7 @@ public:
     void begin(uint8_t sigPin, uint8_t dht_type, void (*isrCallback_wrapper)());
     void isrCallback();
     int acquire();
-    int acquireAndWait(uint32_t);
+    int acquireAndWait(uint32_t timeout = 0);
     float getCelsius();
     float getFahrenheit();
     float getKelvin();

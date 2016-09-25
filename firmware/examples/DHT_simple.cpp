@@ -1,6 +1,6 @@
 /*
- * FILE:        DHT_simple.ino
- * VERSION:     0.3
+ * FILE:        DHT_simple.cpp
+ * VERSION:     0.4
  * PURPOSE:     Example that uses DHT library with two sensors
  * LICENSE:     GPL v3 (http://www.gnu.org/licenses/gpl.html)
  *
@@ -11,13 +11,14 @@
  *      January 2014        Original Spark Port
  *      October 2014        Added support for DHT21/22 sensors
  *                          Improved timing, moved FP math out of ISR
+ *      September 2016      Updated for Particle
  */
 
 #include "PietteTech_DHT/PietteTech_DHT.h"  // Uncomment if building in IDE
-//#include "PietteTech_DHT.h"  // Uncommend if building using CLI
+//#include "PietteTech_DHT.h"                 // Uncomment if building using CLI
 
 #define DHTTYPE  DHT22       // Sensor type DHT11/21/22/AM2301/AM2302
-#define DHTPIN   2           // Digital pin for communications
+#define DHTPIN   3           // Digital pin for communications
 
 //declaration
 void dht_wrapper(); // must be declared before the lib initialization
@@ -31,6 +32,7 @@ void setup()
     Serial.begin(9600);
     while (!Serial.available()) {
         Serial.println("Press any key to start.");
+		Particle.process();
         delay (1000);
     }
     Serial.println("DHT Example program using DHT.acquireAndWait");

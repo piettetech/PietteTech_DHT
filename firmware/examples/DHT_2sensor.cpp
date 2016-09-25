@@ -1,6 +1,6 @@
 /*
- * FILE:        DHT_2sensor.ino
- * VERSION:     0.3
+ * FILE:        DHT_2sensor.cpp
+ * VERSION:     0.4
  * PURPOSE:     Example that uses DHT library with two sensors
  * LICENSE:     GPL v3 (http://www.gnu.org/licenses/gpl.html)
  *
@@ -12,11 +12,13 @@
  *      January 2014        Original Spark Port
  *      October 2014        Added support for DHT21/22 sensors
  *                          Improved timing, moved FP math out of ISR
+ *      September 2016      Updated for Particle
  */
 // NOTE DHT_REPORT_TIMING requires DHT_DEBUG_TIMING in PietteTech_DHT.h for debugging edge->edge timings
 //#define DHT_REPORT_TIMING
 
-#include "PietteTech_DHT/PietteTech_DHT.h"
+#include "PietteTech_DHT/PietteTech_DHT.h"  // Uncomment if building in IDE
+//#include "PietteTech_DHT.h"                 // Uncomment if building using CLI
 
 #define DHTTYPEA  DHT22       // Sensor type DHT11/21/22/AM2301/AM2302
 #define DHTPINA   3           // Digital pin for comunications
@@ -58,6 +60,7 @@ void setup()
     Serial.begin(9600);
     while (!Serial.available()) {
         Serial.println("Press any key to start.");
+        Particle.process();
         delay (1000);
     }
     Serial.println("DHT Example program using 2 DHT sensors");

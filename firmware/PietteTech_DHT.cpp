@@ -1,6 +1,6 @@
 /*
  * FILE:        PietteTech_DHT.cpp
- * VERSION:     0.3
+ * VERSION:     0.4
  * PURPOSE:     Spark Interrupt driven lib for DHT sensors
  * LICENSE:     GPL v3 (http://www.gnu.org/licenses/gpl.html)
  *
@@ -8,6 +8,7 @@
  *      January 2014        Original Spark Port
  *      October 2014        Added support for DHT21/22 sensors
  *                          Improved timing, moved FP math out of ISR
+ *      September 2016      Updated for Particle
  *
  * Based on adaptation by niesteszeck (github/niesteszeck)
  * Based on original DHT11 library (http://playgroudn.adruino.cc/Main/DHT11Lib)
@@ -133,7 +134,7 @@ int PietteTech_DHT::acquire() {
         return DHTLIB_ERROR_ACQUIRING;
 }
 
-int PietteTech_DHT::acquireAndWait(uint32_t timeout=0) {
+int PietteTech_DHT::acquireAndWait(uint32_t timeout) {
     acquire();
     uint32_t start = millis();
     uint32_t wrapper;

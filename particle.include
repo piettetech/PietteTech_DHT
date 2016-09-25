@@ -1,0 +1,6 @@
+firmware/PietteTech_DHT.cpp
+firmware/PietteTech_DHT.h
+firmware/examples/DHT_simple.cpp
+#firmware/examples/DHT_example.cpp
+#firmware/examples/DHT_2sensor.cpp
+
