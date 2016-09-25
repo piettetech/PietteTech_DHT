@@ -10,7 +10,8 @@
     Scott Piette, Piette Technologies - scott.piette@gmail.com<br>
     Jan 18, 2014&nbsp; - Initial port to Spark Core<br>
     Oct&nbsp; 1, 2014&nbsp; - Added DHT11/21 support, fixed timing
-    issues, enhanced examples
+    issues, enhanced examples<br>
+    Sep&nbspl 23, 2016&nbsp; - Updated for Particle and moved isrCallback
     <p>
     </p>
     <p></p>
