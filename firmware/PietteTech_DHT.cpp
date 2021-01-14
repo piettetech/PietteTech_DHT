@@ -27,7 +27,7 @@
  *
  *
  * This library supports the DHT sensor on the following pins
- * D0, D1, D2, D3, D4, A0, A1, A3, A5, A6, A7
+ * D1, D2, D3, D4, A0, A1, A3, A5, A6, A7
  * http://docs.spark.io/firmware/#interrupts-attachinterrupt
  *
  */
